@@ -152,31 +152,33 @@ CREATE TABLE EMPLOYEE_HOLIDAY(
     REFERENCES EMPLOYEE
 );
 
+-- PAYROLL MODULE
+DROP TABLE PAYSLIP_ALLOWANCE;
+DROP TABLE PAYSLIP_INCENTIVE;
+DROP TABLE PAYSLIP_DEDUCTION;
 DROP TABLE ALLOWANCE;
 DROP TABLE INCENTIVE;
 DROP TABLE DEDUCTION;
 DROP TABLE PAYSLIP;
-DROP TABLE PAYSLIP_ALLOWANCE;
-DROP TABLE PAYSLIP_INCENTIVE;
-DROP TABLE PAYSLIP_DEDUCTION;
+DROP TABLE EMPLOYEE;
 
+CREATE TABLE EMPLOYEE(
+Employee_id VARCHAR(30) PRIMARY KEY
+);
 CREATE TABLE ALLOWANCE(
-Allowance_id VARCHAR(4) PRIMARY KEY,
-Allowance_name VARCHAR(30) NOT NULL,
-Allowance_amount NUMBER(4,2) NOT NULL
+Allowance_id VARCHAR(6) PRIMARY KEY,
+Allowance_name VARCHAR(40) NOT NULL,
+Allowance_amount NUMBER(6,2) NOT NULL
 );
-
 CREATE TABLE INCENTIVE(
-Incentive_id VARCHAR(4) PRIMARY KEY,
-Incentive_name VARCHAR(30) NOT NULL
+Incentive_id VARCHAR(6) PRIMARY KEY,
+Incentive_name VARCHAR(40) NOT NULL
 );
-
 CREATE TABLE DEDUCTION(
-Deduction_id VARCHAR(4) PRIMARY KEY,
-Deduction_name VARCHAR(30) NOT NULL,
-Deduction_rate NUMBER(2,2) NOT NULL
+Deduction_id VARCHAR(6) PRIMARY KEY,
+Deduction_name VARCHAR(40) NOT NULL,
+Deduction_rate NUMBER(4,2) NOT NULL
 );
-
 CREATE TABLE PAYSLIP(
 Payslip_num NUMBER PRIMARY KEY,
 Employee_id VARCHAR(10) NOT NULL,
@@ -187,30 +189,60 @@ Total_deduction NUMBER NOT NULL,
 Total_salary NUMBER NOT NULL,
 FOREIGN KEY (Employee_id) REFERENCES EMPLOYEE(Employee_id)
 );
-
 CREATE TABLE PAYSLIP_ALLOWANCE(
 Payslip_num NUMBER,
-Allowance_id VARCHAR(4),
+Allowance_id VARCHAR(6),
 PRIMARY KEY (Payslip_num, Allowance_id),
 FOREIGN KEY (Payslip_num) REFERENCES PAYSLIP(Payslip_num),
 FOREIGN KEY (Allowance_id) REFERENCES ALLOWANCE(Allowance_id)
 ); 
-
 CREATE TABLE PAYSLIP_INCENTIVE(
 Payslip_num NUMBER,
-Incentive_id VARCHAR(4),
+Incentive_id VARCHAR(6),
+Incentive_amount NUMBER(6,2),
 PRIMARY KEY (Payslip_num, Incentive_id),
 FOREIGN KEY (Payslip_num) REFERENCES PAYSLIP(Payslip_num),
 FOREIGN KEY (Incentive_id) REFERENCES INCENTIVE(Incentive_id)
 );
-
 CREATE TABLE PAYSLIP_DEDUCTION(
 Payslip_num NUMBER,
-Deduction_id VARCHAR(4),
+Deduction_id VARCHAR(6),
 PRIMARY KEY (Payslip_num, Deduction_id),
 FOREIGN KEY (Payslip_num) REFERENCES PAYSLIP(Payslip_num),
 FOREIGN KEY (Deduction_id) REFERENCES DEDUCTION(Deduction_id)
 ); 
+
+--ALLOWANCE FIXED DATABASE
+INSERT INTO ALLOWANCE (Allowance_id, Allowance_name, Allowance_amount) VALUES ('AL_PET', 'Petrol Allowance', 100);
+INSERT INTO ALLOWANCE (Allowance_id, Allowance_name, Allowance_amount) VALUES ('AL_PAR', 'Parking Allowance', 100);
+INSERT INTO ALLOWANCE (Allowance_id, Allowance_name, Allowance_amount) VALUES ('AL_MEA', 'Meal Allowance', 100);
+INSERT INTO ALLOWANCE (Allowance_id, Allowance_name, Allowance_amount) VALUES ('AL_MED', 'Mediacal Allowance', 500);
+INSERT INTO ALLOWANCE (Allowance_id, Allowance_name, Allowance_amount) VALUES ('AL_GYM', 'Gym Allowance', 200);
+COMMIT;
+--INCENTIVE FIXED DATABASE
+INSERT INTO INCENTIVE (Incentive_id, Incentive_name) VALUES ('IN_PRO', 'Project Completion');
+INSERT INTO INCENTIVE (Incentive_id, Incentive_name) VALUES ('IN_EMP', 'Employee of the Month');
+INSERT INTO INCENTIVE (Incentive_id, Incentive_name) VALUES ('IN_BON', 'Year End Bonus');
+COMMIT;
+--DEDUCTION FIXED DATABASE
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('EPF_1', 'EPF FOR Salary<=5k of Employee Type', 11);
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('EPF_2', 'EPF FOR Salary<=5k of Employer Type', 13);
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('EPF_3', 'EPF FOR Salary>5k of Employee Type', 11);
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('EPF_4', 'EPF FOR Salary>5k of Employer Type', 12);
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('SOCSO', 'Social Security Organization Tax', 1.75);
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('EIS', 'Employee Insurance System', 0.2);
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('INC_1', 'Income Tax FOR Net Income<5k', 0);
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('INC_2', 'Income Tax FOR Net Income 5k-20k', 1);
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('INC_3', 'Income Tax FOR Net Income 20k-35k', 3);
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('INC_4', 'Income Tax FOR Net Income 35k-50k', 8);
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('INC_5', 'Income Tax FOR Net Income 50k-70k', 14);
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('INC_6', 'Income Tax FOR Net Income 70k-100k', 21);
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('INC_7', 'Income Tax FOR Net Income 100k-250k', 24);
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('INC_8', 'Income Tax FOR Net Income 250k-400k', 24.5);
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('INC_9', 'Income Tax FOR Net Income 400k-600k', 25);
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('INC_10', 'Income Tax FOR Net Income 600k-1M', 26);
+INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('INC_11', 'Income Tax FOR Net Income>1M', 28);
+COMMIT;
 
 DROP TABLE EMPLOYEE_TRAINING;
 DROP TABLE EMPLOYEE_PROJECT;
