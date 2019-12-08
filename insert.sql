@@ -1,3 +1,8 @@
+--TEST EMPLOYEE_POSITION DATABASE
+INSERT INTO EMPLOYEE_POSITION (Position_id, Position_name, Salary) VALUES ('S1', 'S1', 5000);
+INSERT INTO EMPLOYEE_POSITION (Position_id, Position_name, Salary) VALUES ('S2', 'S2', 7000);
+INSERT INTO EMPLOYEE_POSITION (Position_id, Position_name, Salary) VALUES ('S3', 'S3', 10000);
+COMMIT;
 --ALLOWANCE FIXED DATABASE
 INSERT INTO ALLOWANCE (Allowance_id, Allowance_name, Allowance_amount) VALUES ('AL_PET', 'Petrol Allowance', 100);
 INSERT INTO ALLOWANCE (Allowance_id, Allowance_name, Allowance_amount) VALUES ('AL_PAR', 'Parking Allowance', 100);
@@ -29,12 +34,12 @@ INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('IN
 INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('INC_10', 'Income Tax FOR Net Income 600k-1M', 26);
 INSERT INTO DEDUCTION (Deduction_id, Deduction_name, Deduction_rate) VALUES ('INC_11', 'Income Tax FOR Net Income>1M', 28);
 COMMIT;
---EMPLOYEE TEST Data
-INSERT INTO EMPLOYEE (Employee_id) VALUES ('AA01');
-INSERT INTO EMPLOYEE (Employee_id) VALUES ('AA02');
-INSERT INTO EMPLOYEE (Employee_id) VALUES ('AA03');
-INSERT INTO EMPLOYEE (Employee_id) VALUES ('AA04');
-INSERT INTO EMPLOYEE (Employee_id) VALUES ('AA05');
+--TEST EMPLOYEE Data
+INSERT INTO EMPLOYEE (Employee_id, Position_id) VALUES ('AA01', 'S1');
+INSERT INTO EMPLOYEE (Employee_id, Position_id) VALUES ('AA02', 'S2');
+INSERT INTO EMPLOYEE (Employee_id, Position_id) VALUES ('AA03', 'S3');
+INSERT INTO EMPLOYEE (Employee_id, Position_id) VALUES ('AA04', 'S2');
+INSERT INTO EMPLOYEE (Employee_id, Position_id) VALUES ('AA05', 'S1');
 COMMIT;
 --PAYSLIP Data
 INSERT INTO PAYSLIP (Payslip_num, Employee_id, Pay_date, Total_allowance, Total_incentive, Total_deduction, Total_salary) VALUES ('AA01_1119', 'AA01', '01-NOV-19',1,0,0,0);
@@ -64,4 +69,30 @@ INSERT INTO PAYSLIP_ALLOWANCE (Payslip_num, Allowance_id) VALUES ('AA05_1119', '
 INSERT INTO PAYSLIP_ALLOWANCE (Payslip_num, Allowance_id) VALUES ('AA05_1119', 'AL_MED');
 INSERT INTO PAYSLIP_ALLOWANCE (Payslip_num, Allowance_id) VALUES ('AA05_1119', 'AL_GYM');
 COMMIT;
-
+--PAYSLIP_INCENTIVE Data
+INSERT INTO PAYSLIP_INCENTIVE (Payslip_num, Incentive_id, Incentive_amount) VALUES ('AA01_1119', 'IN_PRO', 100);
+INSERT INTO PAYSLIP_INCENTIVE (Payslip_num, Incentive_id, Incentive_amount) VALUES ('AA01_1119', 'IN_EMP', 150);
+INSERT INTO PAYSLIP_INCENTIVE (Payslip_num, Incentive_id, Incentive_amount) VALUES ('AA01_1119', 'IN_YEA', 130);
+INSERT INTO PAYSLIP_INCENTIVE (Payslip_num, Incentive_id, Incentive_amount) VALUES ('AA02_1119', 'IN_PRO', 100);
+INSERT INTO PAYSLIP_INCENTIVE (Payslip_num, Incentive_id, Incentive_amount) VALUES ('AA02_1119', 'IN_EMP', 150);
+INSERT INTO PAYSLIP_INCENTIVE (Payslip_num, Incentive_id, Incentive_amount) VALUES ('AA03_1119', 'IN_PRO', 100);
+INSERT INTO PAYSLIP_INCENTIVE (Payslip_num, Incentive_id, Incentive_amount) VALUES ('AA04_1119', 'IN_PRO', 100);
+INSERT INTO PAYSLIP_INCENTIVE (Payslip_num, Incentive_id, Incentive_amount) VALUES ('AA04_1119', 'IN_EMP', 150);
+COMMIT;
+--PAYSLIP_DEDUCTION Data
+INSERT INTO PAYSLIP_DEDUCTION (Payslip_num, Deduction_id) VALUES ('AA01_1119', 'EPF_1');
+INSERT INTO PAYSLIP_DEDUCTION (Payslip_num, Deduction_id) VALUES ('AA01_1119', 'SOCSO');
+INSERT INTO PAYSLIP_DEDUCTION (Payslip_num, Deduction_id) VALUES ('AA01_1119', 'EIS');
+INSERT INTO PAYSLIP_DEDUCTION (Payslip_num, Deduction_id) VALUES ('AA01_1119', 'INC_1');
+INSERT INTO PAYSLIP_DEDUCTION (Payslip_num, Deduction_id) VALUES ('AA02_1119', 'EPF_1');
+INSERT INTO PAYSLIP_DEDUCTION (Payslip_num, Deduction_id) VALUES ('AA02_1119', 'SOCSO');
+INSERT INTO PAYSLIP_DEDUCTION (Payslip_num, Deduction_id) VALUES ('AA02_1119', 'EIS');
+INSERT INTO PAYSLIP_DEDUCTION (Payslip_num, Deduction_id) VALUES ('AA02_1119', 'INC_2');
+INSERT INTO PAYSLIP_DEDUCTION (Payslip_num, Deduction_id) VALUES ('AA03_1119', 'EPF_1');
+INSERT INTO PAYSLIP_DEDUCTION (Payslip_num, Deduction_id) VALUES ('AA03_1119', 'EIS');
+INSERT INTO PAYSLIP_DEDUCTION (Payslip_num, Deduction_id) VALUES ('AA03_1119', 'INC_3');
+INSERT INTO PAYSLIP_DEDUCTION (Payslip_num, Deduction_id) VALUES ('AA04_1119', 'EPF_1');
+INSERT INTO PAYSLIP_DEDUCTION (Payslip_num, Deduction_id) VALUES ('AA04_1119', 'SOCSO');
+INSERT INTO PAYSLIP_DEDUCTION (Payslip_num, Deduction_id) VALUES ('AA04_1119', 'EIS');
+INSERT INTO PAYSLIP_DEDUCTION (Payslip_num, Deduction_id) VALUES ('AA04_1119', 'INC_4');
+COMMIT;
